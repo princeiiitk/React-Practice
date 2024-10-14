@@ -19,7 +19,7 @@ function App() {
         </div>
         <br></br>
         <div>
-          <button className='btn1' onClick={decreament}>decrement {value}</button>
+          <button className='btn' onClick={decreament}>decrement {value}</button>
         </div>
         
       </div>
