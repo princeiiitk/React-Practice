@@ -23,7 +23,7 @@ function App() {
         sethumidity(data.main.humidity)
         setwind(data.wind.speed)
         console.log(data.main.pressure)
-       setpressure(data.main.pressure)
+        setpressure(data.main.pressure)
      
     }
     catch {
@@ -39,9 +39,10 @@ function App() {
 
   return (
     <>
-      <div className="w-[100%] h-[100%] ">
+    
+      <div className="w-[100%] h-[100%] m-auto ">
          <div className="flex flex-col items-center justify-center  ml-30 h-[80%] w-[30%] bg-blue-500 rounded-xl ml-20">
-        <div className="flex flex-col items-center justify-center w-[100%]  h-44 rounded-4xl shadow-xl">
+         <div className="flex flex-col items-center justify-center w-[100%]  h-44 rounded-4xl shadow-xl">
           <label className="text-3xl">Enter City Name</label>
             <input onChange={(e) => { setcity(e.target.value) }} type="text" placeholder="Enter your City Name" className="bg-slate-200 m-7 w-[80%]  h-10 text-2xl font-sans rounded-lg" />
             <button className="text-3xl bg-green-400 rounded-2xl w-40 h-10 font-serif mb-2 shadow-md hover:bg-slate-300" onClick={handlesearch}>Search</button>

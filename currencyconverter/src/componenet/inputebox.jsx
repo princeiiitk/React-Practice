@@ -7,6 +7,7 @@ export default function Inputbox({
   onAmountChange,
   onCurrencyChange,
 }) {
+    console.log(onAmountChange);
   return (
     <>
       <div className="flex items-center justify-center text-xl font-sans w-[60%] ml-[20%] bg-blue-400 rounded-xl shadow-xl">
