@@ -1,33 +1,92 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react"
+import {TodoProvider} from "./Context/TodoContext";
+import Todoitems from "./Componenet/Todoitems";
+import TodoForm from "./Componenet/TodoForm";
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [Todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const flag = localStorage.getItem("todo");
+    if (flag) {
+        const todos = JSON.parse(localStorage.getItem("todo"))
+       if (todos.length > 0) {
+      setTodos(todos)
+    }
+      }
+      
+  
+ 
+
+   
+  }, [])
+
+  useEffect(() => {
+    if (Todos.length > 0) {
+      localStorage.setItem('todo', JSON.stringify(Todos))
+    }
+      
+},[Todos])
+  
+  const AddTodo = (Todo) => {
+    
+    setTodos((prev) => 
+      [{id:Date.now(),...Todo},...prev]
+        )
+   }
+ 
+  const DeleteTodo = (id) => {
+    setTodos((prev) => 
+      prev.filter((idx) => 
+           idx.id!==id
+        )
+     )
+  }
+
+  const Updatetodo = (id, Todo) => {
+    if (Todo === "") {
+      return;
+    }
+    setTodos((prev) => 
+      prev.map((idx) =>
+          idx.id === id ? {...idx, Todomsg : Todo} : idx
+          )
+      )
+  }
+  const ToggleCompleted = (id) => {
+    
+    setTodos((prev) => {
+      prev.map((idx) =>
+        idx.id === id ? {...idx,Completed:!idx.Completed} : idx)
+          
+        
+    })
+
+  }
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <TodoProvider value={{Todos,DeleteTodo,Updatetodo,AddTodo,ToggleCompleted}}>
+        <div>
+          <TodoForm >
+           
+          </TodoForm>
+        </div>
+        
+        {
+         
+           Todos ? Todos.map((todo) => (
+            <div key={todo.id}>
+              <Todoitems todo={todo} />
+            </div>
+          )):null
+        }
+        
+     
+      </TodoProvider>
+     
     </>
   )
 }
