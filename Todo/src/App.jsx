@@ -54,21 +54,12 @@ function App() {
           )
       )
   }
-  const ToggleCompleted = (id) => {
-    
-    setTodos((prev) => {
-      prev.map((idx) =>
-        idx.id === id ? {...idx,Completed:!idx.Completed} : idx)
-          
-        
-    })
 
-  }
 
 
   return (
     <>
-      <TodoProvider value={{Todos,DeleteTodo,Updatetodo,AddTodo,ToggleCompleted}}>
+      <TodoProvider value={{Todos,DeleteTodo,Updatetodo,AddTodo}}>
         <div>
           <TodoForm >
            
