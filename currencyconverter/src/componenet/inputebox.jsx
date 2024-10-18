@@ -3,7 +3,7 @@ export default function Inputbox({
   label,
   amount = 0,
   currencyOptions = [],
-  selectedCurrency = 'USD',
+  selectedCurrency,
   onAmountChange,
   onCurrencyChange,
 }) {

@@ -6,20 +6,32 @@ function App() {
   const [amount, setAmount] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [toCurrency, setToCurrency] = useState("INR");
-  const [fromCurrency, setFromCurrency] = useState("INR");
+  const [fromCurrency, setFromCurrency] = useState("USD");
 
   const response = CurrencyInfo(fromCurrency);
+  console.log(response);
   const options = response ? Object.keys(response) : [];
 
   const swap = () => {
     setToCurrency(fromCurrency);
     setFromCurrency(toCurrency);
+ 
+    setConvertedAmount(amount/response[toCurrency])
+   
+  
+    
+  
   };
 
+
   const convert = () => {
-    if (response && response[toCurrency]) {
+   
+      console.log(response[toCurrency])
       setConvertedAmount(amount * response[toCurrency]);
-    }
+    
+  
+     
+   
   };
 
   return (
@@ -38,6 +50,7 @@ function App() {
 
         <div>
           <button
+            
             onClick={swap}
             className="border-2 border-black w-20 h-10 ml-[45%] bg-blue-600 rounded-xl text-3xl font-sans"
           >
