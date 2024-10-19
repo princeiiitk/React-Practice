@@ -23,7 +23,7 @@ export default function TodoItems() {
                                 <input
                                     className="p-1"
                                     onChange={() => settik((prev) => !prev)}
-                                    checked={editId === todo.id ? tik : false}
+                                    checked={editId === todo.id ? tik : null}
                                     type="checkbox"
                                 />
 
