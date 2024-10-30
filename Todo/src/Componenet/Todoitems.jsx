@@ -1,45 +1,57 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import useTode from "../Context/TodoContext"
+import useTodo from "../Context/TodoContext";
 
+export default function TodoItems({ todo }) {
+    const { DeleteTodo, UpdateTodo } = useTodo();
+    const [edit, setEdit] = useState(false);
+    const [checked, setChecked] = useState(todo.Completed);
+    const [changeTodo, setChangeTodo] = useState(todo.Todomsg);
 
-export default function Todoitems({todo}) {
-    const {DeleteTodo,  Updatetodo } = useTode();
-    const [edit, setedit] = useState(false);
-    const [tik,settik]=useState(false);
-   
-    const [chageTodo,setchangeTodo] = useState(todo.Todomsg); 
-  
-    
     const handleUpdate = () => {
-         console.log(chageTodo)
-        Updatetodo(todo.id, chageTodo );
-        setedit(false)
-    }
-   
-   
- 
-  return (
-      <>
-          
-          <div className="h-30">
-               <div className={`${tik ? "bg-red-800" : "bg-blue-600"}  w-[50%] ml-[28%] mt-2 h-[22%]  rounded-xl shadow-lg`}>
-              <div className="h-20  ml-[1%]">
-                  <input  onChange={()=>{settik((prev)=>!prev )}}  checked={tik}  type="checkbox" />
-                  <input  onChange={(e)=>{setchangeTodo(e.target.value)}} value={!edit ? todo.Todomsg: chageTodo} readOnly={!edit} className="w-[70%] text-2xl font-sans h-14 rounded-xl m-1  mt-2 text-black "  type="text" />
-                      <button onClick={() => {
-                          if (edit) {
-                              handleUpdate()
-                          } else {
-                              setedit(true)
-                          }
-                      }}
-                          
-                          className="m-2 text-xl bg-green-500 w-[11%] h-10 rounded-lg font-sans" type="button">{edit ? "Update":"Edit"}</button>
-                  <button  onClick={()=>{DeleteTodo(todo.id)}} className="m-2 text-xl bg-red-600 w-[11%] h-10 rounded-lg font-sans" type="button">Delete</button>
-              </div>
-         </div> 
-         </div>
-      </>
-  )
+        UpdateTodo(todo.id, changeTodo);
+        setEdit(false);
+    };
+
+    return (
+        <div className="max-w-lg mx-auto my-2 p-2">
+            <div className={`${checked ? "bg-red-800" : "bg-blue-600"} flex items-center rounded-xl shadow-lg p-4 transition duration-200`}>
+                <input
+                    onChange={() => setChecked((prev) => !prev)}
+                    checked={checked}
+                    type="checkbox"
+                    className="h-6 w-6 cursor-pointer"
+                />
+                <input
+                    onChange={(e) => setChangeTodo(e.target.value)}
+                    value={!edit ? todo.Todomsg : changeTodo}
+                    readOnly={!edit}
+                    className="flex-grow text-2xl font-sans h-12 rounded-xl m-1 text-black focus:outline-none"
+                    type="text"
+                />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:ml-2">
+                    <button
+                        onClick={() => {
+                            if (edit) {
+                                handleUpdate();
+                            } else {
+                                setEdit(true);
+                            }
+                        }}
+                        className="m-2 text-xl bg-green-500 w-full sm:w-auto h-10 rounded-lg font-sans transition duration-200 hover:bg-green-600"
+                        type="button"
+                    >
+                        {edit ? "Update" : "Edit"}
+                    </button>
+                    <button
+                        onClick={() => DeleteTodo(todo.id)}
+                        className="m-2 text-xl bg-red-600 w-full sm:w-auto h-10 rounded-lg font-sans transition duration-200 hover:bg-red-700"
+                        type="button"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 }

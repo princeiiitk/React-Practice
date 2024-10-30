@@ -1,43 +1,56 @@
-
-
 import { useState } from 'react';
-import './App.css'
-
+import './App.css';
 
 function App() {
-  let [decimal, setdecimal] = useState();
+  const [decimal, setDecimal] = useState("");
+  const [binary, setBinary] = useState("");
 
-  let [binary, setbinary] = useState("")
- 
-  const binarytodecimal = () => {
+  const binaryToDecimal = () => {
     let temp = Number(decimal);
     let str = "";
     while (temp > 0) {
       str = Math.floor(temp % 2) + str;
       temp = Math.floor(temp / 2);
     }
-    setbinary(str)
+    setBinary(str);
+  };
 
-    
-  }
-  
   return (
     <>
-      <div className='flex flex-col items-center justify-center shadow-2xl w-[50%] border border-gray-500 rounded-lg ml-10'>
-        <div className='flex flex-col items-center justify-center my-5 w-[100%]'>
-          <label className='text-xl font-bold' htmlFor='Decimal'>Decimal Number</label>
-          <input className='text-xl bg-slate-400 h-10 rounded-lg w-[50%]' onChange={(e)=>{setdecimal(e.target.value)}} placeholder='Enter Decimal Number' type='text' />
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 p-5">
+        <div className="flex flex-col items-center justify-center shadow-lg bg-white rounded-lg p-6 w-full max-w-md border border-gray-300">
+          <h1 className="text-2xl font-bold mb-4">Decimal to Binary Converter</h1>
+          <div className="flex flex-col w-full mb-4">
+            <label className="text-lg font-semibold" htmlFor="decimal">Decimal Number</label>
+            <input
+              className="text-lg bg-gray-200 h-10 rounded-lg border border-gray-400 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setDecimal(e.target.value)}
+              placeholder="Enter Decimal Number"
+              type="number"
+              id="decimal"
+            />
+          </div>
+          <button
+            className="text-center font-serif text-lg bg-blue-500 text-white rounded-lg h-10 w-full hover:bg-blue-600 transition duration-200"
+            onClick={binaryToDecimal}
+          >
+            Convert
+          </button>
+          <div className="flex flex-col w-full mt-4">
+            <label className="text-lg font-semibold" htmlFor="binary">Binary Number</label>
+            <input
+              className="text-lg h-10 bg-gray-200 border border-gray-400 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={binary}
+              placeholder="Binary number here"
+              type="text"
+              id="binary"
+              readOnly
+            />
+          </div>
         </div>
-        <div className='w-full'>
-          <button className=' text-center font-serif text-xl btn btn-primary my-3 bg-blue-500 rounded-lg h-10 w-[20%]' onClick={binarytodecimal}>Convert</button>
-        </div>
-        <div className='flex flex-col items-center justify-center my-5 w-[100%]' >
-             <label className='text-xl font-bold' htmlFor='username'>Binary Number</label>
-          <input className=' text-md h-10 border-t-2 text-xl font-sans pl-20  rounded-lg w-[50%]' value={binary} placeholder='Binary number here' type='text' />
-        </div>
-    </div>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

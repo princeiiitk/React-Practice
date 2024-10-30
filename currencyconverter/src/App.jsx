@@ -15,70 +15,56 @@ function App() {
   const swap = () => {
     setToCurrency(fromCurrency);
     setFromCurrency(toCurrency);
- 
-    setConvertedAmount(amount/response[toCurrency])
-   
-  
-    
-  
+    setConvertedAmount(amount / response[toCurrency]);
   };
 
-
   const convert = () => {
-   
-      console.log(response[toCurrency])
-      setConvertedAmount(amount * response[toCurrency]);
-    
-  
-     
-   
+    console.log(response[toCurrency]);
+    setConvertedAmount(amount * response[toCurrency]);
   };
 
   return (
-    <>
-      <div>
-        <div>
-          <Inputbox
-            label="From"
-            amount={amount}
-            currencyOptions={options}
-            onCurrencyChange={(currency) => setFromCurrency(currency)}
-            onAmountChange={(amount) => setAmount(amount)}
-            selectedCurrency={fromCurrency}
-          />
-        </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-4xl font-bold mb-8">Currency Converter</h1>
 
-        <div>
+      <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+        <Inputbox
+          label="From"
+          amount={amount}
+          currencyOptions={options}
+          onCurrencyChange={(currency) => setFromCurrency(currency)}
+          onAmountChange={(amount) => setAmount(amount)}
+          selectedCurrency={fromCurrency}
+        />
+
+        <div className="flex justify-center my-4">
           <button
-            
             onClick={swap}
-            className="border-2 border-black w-20 h-10 ml-[45%] bg-blue-600 rounded-xl text-3xl font-sans"
+            className="border-2 border-black w-24 h-12 bg-blue-600 rounded-lg text-xl font-semibold text-white hover:bg-blue-500 transition duration-200"
           >
             Swap
           </button>
         </div>
 
-        <div>
-          <Inputbox
-            label="To"
-            amount={convertedAmount}
-            currencyOptions={options}
-            onCurrencyChange={(currency) => setToCurrency(currency)}
-            onAmountChange={(amount) => setAmount(amount)}
-            selectedCurrency={toCurrency}
-          />
-        </div>
+        <Inputbox
+          label="To"
+          amount={convertedAmount}
+          currencyOptions={options}
+          onCurrencyChange={(currency) => setToCurrency(currency)}
+          onAmountChange={(amount) => setAmount(amount)}
+          selectedCurrency={toCurrency}
+        />
 
-        <div>
+        <div className="flex justify-center my-4">
           <button
             onClick={convert}
-            className="border-2 border-black w-[40%] ml-[30%] h-20 mt-10 text-4xl bg-slate-300 rounded-xl font-sans"
+            className="border-2 border-black w-full max-w-md h-14 text-2xl bg-slate-300 rounded-lg font-semibold hover:bg-slate-400 transition duration-200"
           >
             Convert
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

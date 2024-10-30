@@ -1,30 +1,33 @@
-import { useState } from 'react'
-
+import { useState } from 'react';
 import './App.css'
 
 function App() {
-  const [value, setvalue] = useState(0);
-  const increament = () => {
-    
-    setvalue(value+1);
-  }
-  const decreament = () => {
-    setvalue(value-1);
-  }
+  const [value, setValue] = useState(0);
+
+  const increment = () => {
+    setValue(value + 1);
+  };
+
+  const decrement = () => {
+    setValue(value - 1);
+  };
+
   return (
-    <>
-      <div className='main'>
-        <div>
-          <button className='btn' onClick={increament}>increament {value}</button>
+    <div className="container">
+      <div className="counter">
+        <h1>Counter App</h1>
+        <p className="value">{value}</p>
+        <div className="buttons">
+          <button className="btn increment" onClick={increment}>
+            Increment
+          </button>
+          <button className="btn decrement" onClick={decrement}>
+            Decrement
+          </button>
         </div>
-        <br></br>
-        <div>
-          <button className='btn' onClick={decreament}>decrement {value}</button>
-        </div>
-        
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,62 +1,90 @@
-import { useCallback, useEffect, useRef, useState } from "react"
-
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function App() {
-  const [length, setlength] = useState(10);
-  const [SCharecter, setSCharecter] = useState(false);
-  const [Number, setNumber] = useState(false);
-  const [password, setPassword] = useState();
-  const passcopy=useRef(null)
-  const genratepasswords = useCallback(() => {
-  
+  const [length, setLength] = useState(10);
+  const [includeSpecialChars, setIncludeSpecialChars] = useState(false);
+  const [includeNumbers, setIncludeNumbers] = useState(false);
+  const [password, setPassword] = useState("");
+  const passCopyRef = useRef(null);
+
+  const generatePassword = useCallback(() => {
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    if (Number) {
-      str = str + "123456789";
+    if (includeNumbers) {
+      str += "123456789";
     }
-    if (SCharecter) {
-      str = str + "!@#$%^&*()_|}{:,./";
+    if (includeSpecialChars) {
+      str += "!@#$%^&*()_|}{:,./";
+    }
 
-    }
     let pass = "";
-    let char;
-    for (let i = 0; i < length; i++){
-      char = Math.floor(Math.random() * str.length);
-      pass = pass + str.charAt(char);
+    for (let i = 0; i < length; i++) {
+      const charIndex = Math.floor(Math.random() * str.length);
+      pass += str.charAt(charIndex);
     }
-    
+
     setPassword(pass);
+  }, [includeNumbers, includeSpecialChars, length]);
 
-  },[Number,SCharecter,length])
   useEffect(() => {
-    genratepasswords();
- 
+    generatePassword();
+  }, [includeNumbers, includeSpecialChars, length, generatePassword]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[Number,SCharecter,length])
-  const Copypassword = ()=>{
-    passcopy.current?.select()
-    window.navigator.clipboard.writeText(password)
-}
+  const copyPassword = () => {
+    passCopyRef.current?.select();
+    window.navigator.clipboard.writeText(password);
+  };
+
   return (
-    <>
-      <div className=" mt-20 py-10 w-[70%] ml-[18%] rounded-xl bg-slate-400 flex flex-col items-center justify-center border-2 border-red-400 h-[80%]">
-        <div className="w-full">
-          <input type="text" value={password} ref={passcopy} className="w-[50%] h-12 ml-[30%] rounded-xl border-2 border-black text-xl font-sans" 
-            
-          />
-          <button onClick={Copypassword} className="border-2 border-black w-20 h-10 rounded-sm bg-blue-700 text-xl font-sans">copy</button>
-        </div>
-        <div className="flex justify-around text-2xl font-sans ml-[10%]  p-3 mt-2 w-[50%]">
-          <label className=" ">Length</label>
-          <input type="range" max={80} min={10} onChange={(e)=>{setlength(e.target.value)}} className="" />
-          <label className="">Charecter</label>
-          <input type="checkbox" onClick={()=>{setSCharecter((prev)=>!prev)}} className="" />
-          <label className="" >Number</label>
-          <input type="checkbox" onClick={()=>{setNumber((prev)=>!prev)}} className=""/>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-5">
+      <div className="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-center mb-4">Password Generator</h1>
+        <input
+          type="text"
+          value={password}
+          ref={passCopyRef}
+          className="w-full h-12 px-4 mb-4 border rounded-lg border-gray-300 shadow-sm focus:outline-none focus:ring focus:ring-blue-500"
+          readOnly
+        />
+        <button
+          onClick={copyPassword}
+          className="w-full h-12 mb-4 text-white bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300"
+        >
+          Copy
+        </button>
+        <div className="flex flex-col space-y-3">
+          <div className="flex items-center justify-between">
+            <label className="text-lg">Length</label>
+            <input
+              type="range"
+              max={80}
+              min={10}
+              value={length}
+              onChange={(e) => setLength(Number(e.target.value))}
+              className="w-32"
+            />
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={includeSpecialChars}
+              onChange={() => setIncludeSpecialChars((prev) => !prev)}
+              className="mr-2"
+            />
+            <label className="text-lg">Include Special Characters</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={includeNumbers}
+              onChange={() => setIncludeNumbers((prev) => !prev)}
+              className="mr-2"
+            />
+            <label className="text-lg">Include Numbers</label>
+          </div>
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
